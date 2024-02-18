@@ -1,0 +1,12 @@
+class Solution {
+    public int solution(int a, int b, int n) {
+        
+         int result = 0;
+        while (n >= a) {
+            result += b;
+            n = n - a + b;
+        }
+        return result;
+        
+    }
+}
