@@ -1,10 +1,10 @@
 # [level 1] 예산 - 12982 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12982#qna) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12982) 
 
 ### 성능 요약
 
-메모리: 76.8 MB, 시간: 0.32 ms
+메모리: 72.6 MB, 시간: 0.36 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 02월 23일 06:29:42
+2024년 02월 23일 06:57:09
 
 ### 문제 설명
 
