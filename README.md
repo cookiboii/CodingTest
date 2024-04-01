@@ -6,7 +6,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 
 <p>코딩테스트합격자되자 스터디</p>
   
-used language : cpp.Java 
+used language : Java 
 <p>카페 링크</p>
   
 https://cafe.naver.com/dremdeveloper
