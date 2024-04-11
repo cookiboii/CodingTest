@@ -1,18 +1,50 @@
+import java.util.*;
+
 class Solution {
-    public int solution(int n, int k) {
+    public static int solution(int n, int k) {
+        List<String> nums = init(n, k);
+        int answer = 0;
 
-        int ans = 0;
-        String temp[] = Integer.toString(n, k).split("0");
-
-        Loop : for(String t : temp) {
-            if(t.length() == 0) continue;
-            long a = Long.parseLong(t);
-            if(a == 1) continue;
-            for(int i=2; i<=Math.sqrt(a); i++)
-                if(a%i == 0) continue Loop;
-
-            ans++;
+        for (String s : nums) {
+            if (isPrime(Long.parseLong(s))) {
+                answer++;
+            }
         }
-        return ans;
+
+        return answer;
+    }
+
+    private static boolean isPrime(long num) {
+        if (num == 1) {
+            return false;
+        }
+
+        for (int i = 2; i <= (int)Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static String toBinary(int n, int k) {
+        StringBuilder sb = new StringBuilder();
+        while (n > 0) {
+            sb.append(n % k);
+            n /= k;
+        }
+        return sb.reverse().toString();
+    }
+
+    private static List<String> init(int num, int binary) {
+        StringTokenizer st = new StringTokenizer(toBinary(num, binary), "0");
+        List<String> nums = new ArrayList<>();
+
+        while (st.hasMoreTokens()) {
+            nums.add(st.nextToken());
+        }
+
+        return nums;
     }
 }
