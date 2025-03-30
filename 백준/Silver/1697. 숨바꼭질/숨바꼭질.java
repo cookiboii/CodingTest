@@ -1,3 +1,5 @@
+
+
 import java.io.*;
 import java.util.*;
 
@@ -6,7 +8,7 @@ public class Main {
     static int[] dist = new int[100001]; // 이동 횟수를 저장할 배열 (최대 범위)
 
     public static int bfs(int start) {
-        Queue<Integer> queue = new LinkedList<>();
+        Queue<Integer> queue = new ArrayDeque<>();
         queue.offer(start);
         dist[start] = 0; // 시작 위치의 이동 횟수는 0
 
