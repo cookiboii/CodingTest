@@ -1,44 +1,47 @@
 
-import java.io.*;
-import java.util.*;
 
-public class Main {
-    static int N, M;
-    static List<Integer>[] graph;
-    static boolean[] visited;
-    static int infectedCount = 0;
 
-    static void dfs(int v) {
-        visited[v] = true;
-        for (int next : graph[v]) {
-            if (!visited[next]) {
-                infectedCount++;
-                dfs(next);
-            }
-        }
-    }
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
-    public static void main(String[] args) throws IOException {
+public class  Main{
+     static  int N;
+     static  int M;
+     static  int count =0;
+     static boolean[] visited;
+     static ArrayList<Integer> [] list;
+    public static  void  main(String args[]) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine()); // 컴퓨터 수
-        int M = Integer.parseInt(br.readLine()); // 네트워크 연결 수
-
-        graph = new ArrayList[N + 1];
+        N = Integer.parseInt(br.readLine());
+        M = Integer.parseInt(br.readLine());
         visited = new boolean[N + 1];
+        list = new ArrayList[N + 1];
+        for (int i = 1; i <= N; i++) list[i] = new ArrayList<>();
 
-        for (int i = 1; i <= N; i++) {
-            graph[i] = new ArrayList<>();
-        }
 
-        for (int i = 0; i < M; i++) {
+        for (int i = 0; i <M; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            graph[a].add(b);
-            graph[b].add(a); // 양방향 연결
-        }
 
-        dfs(1); // 1번 컴퓨터부터 탐색 시작
-        System.out.println(infectedCount);
+            list[a].add(b);
+            list[b].add(a);
+
+        }
+        dfs(1);
+        System.out.println(count);
+    }
+
+    public static void dfs(int v) {
+         visited[v] = true;
+         for(int next: list[v]){
+             if(!visited[next]){
+                 count++;
+                 dfs(next);
+             }
+         }
     }
 }
