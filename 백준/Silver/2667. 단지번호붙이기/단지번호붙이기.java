@@ -1,68 +1,82 @@
 
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
-public class Main {
-    static int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; // 상하좌우 이동
-    static boolean[][] visited;
-    static int N;
-
-    public static int Bfs(int[][] map, int x, int y) {
-        Queue<int[]> q = new ArrayDeque<>();
-        q.offer(new int[]{x, y});
-        visited[x][y] = true; // 시작점 방문 처리
-
-        int count = 1; // 현재 단지의 집 개수
-
-        while (!q.isEmpty()) {
-            int[] cur = q.poll();
-            int cx = cur[0], cy = cur[1];
-
-            for (int[] dir : dirs) {
-                int nx = cx + dir[0], ny = cy + dir[1];
-
-                if (nx < 0 || nx >= N || ny < 0 || ny >= N) continue; // 범위 체크
-                if (map[nx][ny] == 0 || visited[nx][ny]) continue; // 벽이거나 이미 방문한 경우 스킵
-
-                visited[nx][ny] = true;
-                q.offer(new int[]{nx, ny});
-                count++;
-            }
-        }
-        return count; // 단지 크기 반환
+class Point1 {
+    int x, y;
+    Point1(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
+}
 
+
+public class Main {
+
+    static int N;
+    static int[][] map;
+    static boolean[][] visited;
+
+    // 상하좌우 이동용 배열 (필수!)
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        int[][] map = new int[N][N];
-        visited = new boolean[N][N]; // 방문 배열 초기화
+         N = Integer.parseInt(br.readLine());
+        map = new int[N][N];
 
-        // 입력값 처리 (0: 벽, 1: 집)
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i <N ; i++) {
+
             String line = br.readLine();
-            for (int j = 0; j < N; j++) {
+            for (int j = 0 ; j < N ; j++) {
                 map[i][j] = line.charAt(j) - '0';
             }
         }
+        ArrayList<Integer> result = new ArrayList<>();
+        visited = new boolean[N][N];
+        for (int i = 0; i < N ; i++) {
+            for (int j = 0; j < N ; j++) {
+              if(!visited[i][j] && map[i][j]==1) {
+                  int count = bfs(i,j);
+                  result.add(count);
 
-        List<Integer> complexes = new ArrayList<>();
-        int complexCount = 0;
-
-        // 모든 위치 탐색하여 단지 찾기
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (map[i][j] == 1 && !visited[i][j]) {
-                    complexes.add(Bfs(map, i, j)); // 단지 크기 구하기
-                    complexCount++;
-                }
+              }
             }
         }
+        Collections.sort(result);
 
-        Collections.sort(complexes); // 단지 크기 오름차순 정렬
-        System.out.println(complexCount);
-        for (int size : complexes) {
-            System.out.println(size);
+        System.out.println(result.size()); // 총 단지 수
+        for (int c : result) {
+            System.out.println(c); // 각 단지내 집의 수
         }
+
     }
+    public static int bfs(int x, int y) {
+        Queue<Point1> queue = new ArrayDeque<>();
+        queue.add(new Point1(x, y));
+
+        visited[x][y] = true;
+        int houseCount = 1; // 시작점도 집이니까 1개로 시작
+        while (!queue.isEmpty()) {
+            Point1 point = queue.poll();
+          for (int i = 0; i < 4; i++) {
+                int x1 = point.x + dx[i];
+                int y1 = point.y + dy[i];
+                if (x1 <0 || x1 >= N || y1 <0 ||y1 >= N) {
+                    continue;
+                }
+                if (map[x1][y1]==0||visited[x1][y1] ) {
+                    continue;
+                }
+                queue.add(new Point1(x1, y1));
+                visited[x1][y1] = true;
+                houseCount++;
+          }
+        }
+        return houseCount;
+    }
+
 }
